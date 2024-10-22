@@ -1,12 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { BarChart2, Users, TrendingUp, Eye, ThumbsUp, MessageSquare, Video, DollarSign, /* Settings, Music, */ Share2, Clock, Zap, Award, Percent, Hash } from "lucide-react"
-import Link from "next/link"
+import { Users, TrendingUp, Eye, ThumbsUp, MessageSquare, Video, DollarSign, Share2, Clock, Zap, Award, Percent, Hash } from "lucide-react"
 import {
   LineChart,
   Line,
@@ -151,93 +149,77 @@ export function Analytics() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <BarChart2 className="h-8 w-8 text-purple-600" />
-            <span className="text-2xl font-bold text-gray-800">InfluencerPulse</span>
-          </Link>
-          <nav className="hidden md:flex space-x-6">
-            <Link href="/analytics" className="text-purple-600 font-semibold">Analytics</Link>
-            <Link href="/opportunities" className="text-gray-600 hover:text-purple-600 transition-colors">Opportunities</Link>
-            <Link href="/profile" className="text-gray-600 hover:text-purple-600 transition-colors">Profile & Settings</Link>
-          </nav>
-          <Button variant="outline">Log Out</Button>
-        </div>
-      </header>
-      <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">Analytics Dashboard</h1>
-        <Tabs value={activePlatform} onValueChange={setActivePlatform}>
-          <TabsList>
-            <TabsTrigger value="twitter">Twitter</TabsTrigger>
-            <TabsTrigger value="youtube">YouTube</TabsTrigger>
-            <TabsTrigger value="twitch">Twitch</TabsTrigger>
-            <TabsTrigger value="tiktok">TikTok</TabsTrigger>
-          </TabsList>
-          {["twitter", "youtube", "twitch", "tiktok"].map((platform) => (
-            <TabsContent key={platform} value={platform} className="space-y-4">
-              <div className="grid grid-cols-4 gap-4">
-                {getMetrics(platform).map((metric, index) => (
-                  <StatCard key={index} {...metric} />
-                ))}
-              </div>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Performance Over Time</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="mb-4">
-                    <Select value={selectedMetric} onValueChange={setSelectedMetric}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select metric" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Object.keys(platformData[platform][0]).filter(key => key !== 'date').map((metric) => (
-                          <SelectItem key={metric} value={metric}>
-                            {metric.charAt(0).toUpperCase() + metric.slice(1)}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={platformData[platform]}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Line type="monotone" dataKey={selectedMetric} stroke="#8884d8" />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Engagement Breakdown</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={platformData[platform]}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      {Object.keys(platformData[platform][0])
-                        .filter(key => key !== 'date' && key !== selectedMetric)
-                        .map((key, index) => (
-                          <Bar key={key} dataKey={key} fill={`hsl(${index * 40}, 70%, 50%)`} />
-                        ))}
-                    </BarChart>
-                  </ResponsiveContainer>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          ))}
-        </Tabs>
-      </main>
-    </div>
+    <>
+      <h1 className="text-3xl font-bold mb-8">Analytics Dashboard</h1>
+      <Tabs value={activePlatform} onValueChange={setActivePlatform}>
+        <TabsList>
+          <TabsTrigger value="twitter">Twitter</TabsTrigger>
+          <TabsTrigger value="youtube">YouTube</TabsTrigger>
+          <TabsTrigger value="twitch">Twitch</TabsTrigger>
+          <TabsTrigger value="tiktok">TikTok</TabsTrigger>
+        </TabsList>
+        {["twitter", "youtube", "twitch", "tiktok"].map((platform) => (
+          <TabsContent key={platform} value={platform} className="space-y-4">
+            <div className="grid grid-cols-4 gap-4">
+              {getMetrics(platform).map((metric, index) => (
+                <StatCard key={index} {...metric} />
+              ))}
+            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Performance Over Time</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="mb-4">
+                  <Select value={selectedMetric} onValueChange={setSelectedMetric}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select metric" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.keys(platformData[platform][0]).filter(key => key !== 'date').map((metric) => (
+                        <SelectItem key={metric} value={metric}>
+                          {metric.charAt(0).toUpperCase() + metric.slice(1)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={platformData[platform]}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey={selectedMetric} stroke="#8884d8" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Engagement Breakdown</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={platformData[platform]}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    {Object.keys(platformData[platform][0])
+                      .filter(key => key !== 'date' && key !== selectedMetric)
+                      .map((key, index) => (
+                        <Bar key={key} dataKey={key} fill={`hsl(${index * 40}, 70%, 50%)`} />
+                      ))}
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        ))}
+      </Tabs>
+    </>
   )
 }

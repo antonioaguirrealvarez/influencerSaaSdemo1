@@ -2,13 +2,14 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { MainNav } from "@/components/MainNav"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { BarChart2, Search, Filter, Users, Eye, TrendingUp, BarChart, PieChart, LayoutGrid, LayoutList, Settings, User } from "lucide-react"
-import Link from "next/link"
+import { Search, Filter, Users, Eye, TrendingUp, BarChart, PieChart, LayoutGrid, LayoutList } from "lucide-react"
+// import Link from "next/link"
 import {
   LineChart,
   Line,
@@ -138,29 +139,7 @@ export function CaseStudies() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <BarChart2 className="h-8 w-8 text-purple-600" />
-            <span className="text-2xl font-bold text-gray-800">InfluencerPulse</span>
-          </Link>
-          <nav className="hidden md:flex space-x-6">
-            <Link href="/analytics" className="text-gray-600 hover:text-purple-600 transition-colors">Analytics</Link>
-            <Link href="/opportunities" className="text-gray-600 hover:text-purple-600 transition-colors">Opportunities</Link>
-            <Link href="/viral-trends" className="text-gray-600 hover:text-purple-600 transition-colors">Viral Trends</Link>
-            <Link href="/competitors" className="text-gray-600 hover:text-purple-600 transition-colors">Competitors</Link>
-            <Link href="/case-studies" className="text-purple-600 font-semibold">Case Studies</Link>
-            <Link href="/video-management" className="text-gray-600 hover:text-purple-600 transition-colors">Video Management</Link>
-            <Link href="/settings" className="text-gray-600 hover:text-purple-600 transition-colors">
-              <Settings className="h-5 w-5" />
-            </Link>
-            <Link href="/profile" className="text-gray-600 hover:text-purple-600 transition-colors">
-              <User className="h-5 w-5" />
-            </Link>
-          </nav>
-          <Button variant="outline">Log Out</Button>
-        </div>
-      </header>
+      <MainNav />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Case Studies</h1>
         <div className="flex justify-between items-center mb-6">

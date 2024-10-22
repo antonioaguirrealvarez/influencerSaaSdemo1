@@ -1,8 +1,9 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { BarChart2, Users, TrendingUp, Award } from "lucide-react"
-import Link from "next/link"
+import { MainNav } from "@/components/MainNav"
+// import { Button } from "@/components/ui/button"
+import { Users, TrendingUp, Award } from "lucide-react"
+// import Link from "next/link"
 import Image from 'next/image'
 
 interface TeamMemberProps {
@@ -22,20 +23,7 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, image }) => (
 export function About() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <BarChart2 className="h-8 w-8 text-purple-600" />
-            <span className="text-2xl font-bold text-gray-800">InfluencerPulse</span>
-          </Link>
-          <nav className="hidden md:flex space-x-6">
-            <Link href="/features" className="text-gray-600 hover:text-purple-600 transition-colors">Features</Link>
-            <Link href="/pricing" className="text-gray-600 hover:text-purple-600 transition-colors">Pricing</Link>
-            <Link href="/about" className="text-purple-600 font-semibold">About</Link>
-          </nav>
-          <Button variant="outline">Log In</Button>
-        </div>
-      </header>
+      <MainNav />
       <main className="container mx-auto px-4 py-20">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-12">
           About <span className="text-purple-600">InfluencerPulse</span>

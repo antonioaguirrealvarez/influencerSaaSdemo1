@@ -7,8 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { BarChart2, Search, Filter, /* TrendingUp, Hash, Play, Music, Users, */ Eye, ThumbsUp, MessageSquare, Share2, LayoutGrid, LayoutList, Settings, User } from "lucide-react"
-import Link from "next/link"
+import { Search, Filter, Eye, ThumbsUp, MessageSquare, Share2, LayoutGrid, LayoutList } from "lucide-react"
 import {
   LineChart,
   Line,
@@ -20,6 +19,7 @@ import {
   ResponsiveContainer
 } from "recharts"
 import { TrendProps } from '@/types'
+import { MainNav } from "@/components/MainNav"
 
 interface TrendCardProps {
   title: string;
@@ -143,27 +143,7 @@ export function ViralTrends() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <BarChart2 className="h-8 w-8 text-purple-600" />
-            <span className="text-2xl font-bold text-gray-800">InfluencerPulse</span>
-          </Link>
-          <nav className="hidden md:flex space-x-6">
-            <Link href="/analytics" className="text-gray-600 hover:text-purple-600 transition-colors">Analytics</Link>
-            <Link href="/opportunities" className="text-gray-600 hover:text-purple-600 transition-colors">Opportunities</Link>
-            <Link href="/viral-trends" className="text-purple-600 font-semibold">Viral Trends</Link>
-            <Link href="/competitors" className="text-gray-600 hover:text-purple-600 transition-colors">Competitors</Link>
-            <Link href="/settings" className="text-gray-600 hover:text-purple-600 transition-colors">
-              <Settings className="h-5 w-5" />
-            </Link>
-            <Link href="/profile" className="text-gray-600 hover:text-purple-600 transition-colors">
-              <User className="h-5 w-5" />
-            </Link>
-          </nav>
-          <Button variant="outline">Log Out</Button>
-        </div>
-      </header>
+      <MainNav />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Viral Trends</h1>
         <div className="flex justify-between items-center mb-6">

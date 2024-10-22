@@ -6,8 +6,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { BarChart2, Search, Filter, DollarSign, Users, Calendar, Clock, Target, Briefcase, LayoutGrid, LayoutList } from "lucide-react"
-import Link from "next/link"
+import { Search, Filter, DollarSign, Users, Calendar, Clock, Target, Briefcase, LayoutGrid, LayoutList } from "lucide-react"
+import { MainNav } from "@/components/MainNav"
 
 interface CollaborationCardProps {
   title: string;
@@ -171,20 +171,7 @@ export function Opportunities() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <BarChart2 className="h-8 w-8 text-purple-600" />
-            <span className="text-2xl font-bold text-gray-800">InfluencerPulse</span>
-          </Link>
-          <nav className="hidden md:flex space-x-6">
-            <Link href="/analytics" className="text-gray-600 hover:text-purple-600 transition-colors">Analytics</Link>
-            <Link href="/opportunities" className="text-purple-600 font-semibold">Opportunities</Link>
-            <Link href="/profile" className="text-gray-600 hover:text-purple-600 transition-colors">Profile & Settings</Link>
-          </nav>
-          <Button variant="outline">Log Out</Button>
-        </div>
-      </header>
+      <MainNav />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Opportunities & Collaborations</h1>
         <Tabs value={activeMainTab} onValueChange={setActiveMainTab}>

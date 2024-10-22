@@ -11,9 +11,9 @@ import { Textarea } from "@/components/ui/textarea"
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
-import { BarChart2, Upload, /* Globe, */ ArrowUpCircle, /* Type, ImageIcon, Layers, */ Settings, User } from "lucide-react"
-import Link from "next/link"
+import { Upload, ArrowUpCircle } from "lucide-react"
 import Image from 'next/image'
+import { MainNav } from "@/components/MainNav"
 
 const platforms = ["YouTube", "Instagram", "TikTok", "Facebook", "Twitter"]
 
@@ -45,29 +45,7 @@ export function VideoManagement() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <BarChart2 className="h-8 w-8 text-purple-600" />
-            <span className="text-2xl font-bold text-gray-800">InfluencerPulse</span>
-          </Link>
-          <nav className="hidden md:flex space-x-6">
-            <Link href="/analytics" className="text-gray-600 hover:text-purple-600 transition-colors">Analytics</Link>
-            <Link href="/opportunities" className="text-gray-600 hover:text-purple-600 transition-colors">Opportunities</Link>
-            <Link href="/viral-trends" className="text-gray-600 hover:text-purple-600 transition-colors">Viral Trends</Link>
-            <Link href="/competitors" className="text-gray-600 hover:text-purple-600 transition-colors">Competitors</Link>
-            <Link href="/case-studies" className="text-gray-600 hover:text-purple-600 transition-colors">Case Studies</Link>
-            <Link href="/video-management" className="text-purple-600 font-semibold">Video Management</Link>
-            <Link href="/settings" className="text-gray-600 hover:text-purple-600 transition-colors">
-              <Settings className="h-5 w-5" />
-            </Link>
-            <Link href="/profile" className="text-gray-600 hover:text-purple-600 transition-colors">
-              <User className="h-5 w-5" />
-            </Link>
-          </nav>
-          <Button variant="outline">Log Out</Button>
-        </div>
-      </header>
+      <MainNav />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Video Management</h1>
         <Card>
