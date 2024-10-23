@@ -4,7 +4,6 @@ import * as React from "react"
 import * as SliderPrimitive from "@radix-ui/react-slider"
 
 import { cn } from "@/lib/utils"
-import { useThemeStore } from "@/store/themeStore" // Add if needed for dark mode
 
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,

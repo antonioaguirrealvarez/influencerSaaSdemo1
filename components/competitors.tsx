@@ -22,6 +22,7 @@ import { CompetitorProps } from '@/types'
 import { MainNav } from "@/components/MainNav"
 import { useThemeStore } from '@/store/themeStore'
 import { cn } from "@/lib/utils"
+import { ActionButton } from "@/components/ui/action-button"
 
 const CompetitorCard: React.FC<CompetitorProps> = ({ name, platform, followers, engagementRate, contentFrequency, topContent }) => {
   const { theme } = useThemeStore()
@@ -136,6 +137,7 @@ export function Competitors() {
   const [activeTab, setActiveTab] = useState<string>("all")
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid")
   const [selectedCompetitors, setSelectedCompetitors] = useState<string[]>(["Fashionista123", "TechGuru", "FitnessFanatic"])
+  const { theme } = useThemeStore()  // Add this line to get theme
 
   const filteredCompetitors = activeTab === "all" ? competitors : competitors.filter(competitor => competitor.platform.toLowerCase() === activeTab)
 
@@ -153,13 +155,15 @@ export function Competitors() {
             <Input className="pl-10" placeholder="Search competitors..." />
           </div>
           <div className="flex space-x-2">
-            <Button variant="outline" onClick={() => setViewMode(viewMode === "grid" ? "table" : "grid")}>
-              {viewMode === "grid" ? <LayoutList className="h-4 w-4 mr-2" /> : <LayoutGrid className="h-4 w-4 mr-2" />}
-              {viewMode === "grid" ? "See as Table" : "See as Grid"}
-            </Button>
-            <Button variant="outline">
-              <Filter className="h-4 w-4 mr-2" /> Filter
-            </Button>
+            <ActionButton
+              icon={viewMode === "grid" ? <LayoutList className="h-4 w-4" /> : <LayoutGrid className="h-4 w-4" />}
+              label={viewMode === "grid" ? "See as Table" : "See as Grid"}
+              onClick={() => setViewMode(viewMode === "grid" ? "table" : "grid")}
+            />
+            <ActionButton
+              icon={<Filter className="h-4 w-4" />}
+              label="Filter"
+            />
           </div>
         </div>
         <Tabs value={activeTab} onValueChange={setActiveTab}>

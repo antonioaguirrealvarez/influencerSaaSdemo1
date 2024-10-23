@@ -1,7 +1,7 @@
 import React from 'react';
-import { cn } from 'classnames';
-import { useThemeStore } from '../store/theme';
-import Button from './button';
+import { cn } from '@/lib/utils';
+import { useThemeStore } from '@/store/themeStore';
+import { Button } from "@/components/ui/button";
 
 interface ActionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactNode;

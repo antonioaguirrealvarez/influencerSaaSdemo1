@@ -23,6 +23,7 @@ import {
 import { CaseStudyProps } from '@/types'
 import { useThemeStore } from '@/store/themeStore'
 import { cn } from "@/lib/utils"
+import { ActionButton } from "@/components/ui/action-button"
 
 const CaseStudyCard: React.FC<CaseStudyProps> = ({ title, platform, influencer, followers, engagement, revenue, duration }) => {
   const { theme } = useThemeStore()

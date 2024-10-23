@@ -1,6 +1,5 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
 import { BarChart2, Users, TrendingUp, Zap, Target, Globe } from "lucide-react"
 import { ReactNode } from 'react'
 import { MainNav } from "@/components/MainNav"
