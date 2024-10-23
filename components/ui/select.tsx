@@ -5,6 +5,7 @@ import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { useThemeStore } from "@/store/themeStore" // Add if needed for dark mode
 
 const Select = SelectPrimitive.Root
 

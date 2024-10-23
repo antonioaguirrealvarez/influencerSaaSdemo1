@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Users, TrendingUp, Eye, ThumbsUp, MessageSquare, Video, DollarSign, Share2, Clock, Zap, Award, Percent, Hash } from "lucide-react"
+import { useThemeStore } from '@/store/themeStore'
 import {
   LineChart,
   Line,
@@ -88,6 +89,7 @@ const platformData: PlatformDataType = {
 export function Analytics() {
   const [activePlatform, setActivePlatform] = useState<string>("twitter")
   const [selectedMetric, setSelectedMetric] = useState<string>("followers")
+  const { theme } = useThemeStore()
 
   const getMetrics = (platform: string): StatCardProps[] => {
     switch (platform) {
@@ -149,7 +151,7 @@ export function Analytics() {
   }
 
   return (
-    <>
+    <div className={theme === 'light' ? 'text-gray-800' : 'text-white'}>
       <h1 className="text-3xl font-bold mb-8">Analytics Dashboard</h1>
       <Tabs value={activePlatform} onValueChange={setActivePlatform}>
         <TabsList>
@@ -220,6 +222,6 @@ export function Analytics() {
           </TabsContent>
         ))}
       </Tabs>
-    </>
+    </div>
   )
 }

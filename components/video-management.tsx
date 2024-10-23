@@ -14,10 +14,13 @@ import { Switch } from "@/components/ui/switch"
 import { Upload, ArrowUpCircle } from "lucide-react"
 import Image from 'next/image'
 import { MainNav } from "@/components/MainNav"
+import { useThemeStore } from "@/store/themeStore"
+import { cn } from "@/lib/utils"
 
 const platforms = ["YouTube", "Instagram", "TikTok", "Facebook", "Twitter"]
 
 export function VideoManagement() {
+  const { theme } = useThemeStore()
   const [uploadProgress, setUploadProgress] = useState(0)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [generateSubtitles, setGenerateSubtitles] = useState(true)
@@ -44,10 +47,16 @@ export function VideoManagement() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={cn(
+      "min-h-screen",
+      theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50'
+    )}>
       <MainNav />
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">Video Management</h1>
+        <h1 className={cn(
+          "text-3xl font-bold mb-8",
+          theme === 'dark' && "text-white"
+        )}>Video Management</h1>
         <Card>
           <CardHeader>
             <CardTitle>Upload and Optimize Your Video</CardTitle>
@@ -135,7 +144,12 @@ export function VideoManagement() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full">
+            <Button 
+              variant="outline"
+              className={cn(
+                theme === 'dark' && "border-gray-600 text-white hover:bg-gray-700"
+              )}
+            >
               <ArrowUpCircle className="h-4 w-4 mr-2" />
               Process and Upload Video
             </Button>

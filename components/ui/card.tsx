@@ -1,20 +1,28 @@
 import * as React from "react"
+import { useThemeStore } from "@/store/themeStore"
 
 import { cn } from "@/lib/utils"
 
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
-      className
-    )}
-    {...props}
-  />
-))
+>(({ className, ...props }, ref) => {
+  const { theme } = useThemeStore()
+  
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "rounded-lg border shadow-sm",
+        theme === 'dark' ? 
+          "bg-gray-800 border-gray-700 text-gray-100" : 
+          "bg-white border-gray-200",
+        className
+      )}
+      {...props}
+    />
+  )
+})
 Card.displayName = "Card"
 
 const CardHeader = React.forwardRef<

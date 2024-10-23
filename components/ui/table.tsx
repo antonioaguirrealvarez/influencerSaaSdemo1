@@ -1,27 +1,45 @@
 import * as React from "react"
+import { useThemeStore } from '@/store/themeStore'
 
 import { cn } from "@/lib/utils"
 
 const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
->(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto">
+>(({ className, ...props }, ref) => {
+  const { theme } = useThemeStore()
+  
+  return (
     <table
       ref={ref}
-      className={cn("w-full caption-bottom text-sm", className)}
+      className={cn(
+        "w-full caption-bottom text-sm",
+        theme === 'dark' && "text-gray-100",
+        className
+      )}
       {...props}
     />
-  </div>
-))
+  )
+})
 Table.displayName = "Table"
 
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
-))
+>(({ className, ...props }, ref) => {
+  const { theme } = useThemeStore()
+  
+  return (
+    <thead
+      ref={ref}
+      className={cn(
+        theme === 'dark' && "border-gray-700",
+        className
+      )}
+      {...props}
+    />
+  )
+})
 TableHeader.displayName = "TableHeader"
 
 const TableBody = React.forwardRef<
@@ -54,16 +72,23 @@ TableFooter.displayName = "TableFooter"
 const TableRow = React.forwardRef<
   HTMLTableRowElement,
   React.HTMLAttributes<HTMLTableRowElement>
->(({ className, ...props }, ref) => (
-  <tr
-    ref={ref}
-    className={cn(
-      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
-      className
-    )}
-    {...props}
-  />
-))
+>(({ className, ...props }, ref) => {
+  const { theme } = useThemeStore()
+  
+  return (
+    <tr
+      ref={ref}
+      className={cn(
+        "border-b transition-colors",
+        theme === 'dark' ? 
+          "border-gray-700 hover:bg-gray-700/50" : 
+          "hover:bg-gray-100",
+        className
+      )}
+      {...props}
+    />
+  )
+})
 TableRow.displayName = "TableRow"
 
 const TableHead = React.forwardRef<

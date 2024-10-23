@@ -2,8 +2,10 @@
 
 import { Button } from "@/components/ui/button"
 import { BarChart2, Users, TrendingUp, Zap, Target, Globe } from "lucide-react"
-import Link from "next/link"
 import { ReactNode } from 'react'
+import { MainNav } from "@/components/MainNav"
+import { useThemeStore } from '@/store/themeStore'
+import { cn } from '@/lib/utils'
 
 interface FeatureProps {
   icon: ReactNode;
@@ -11,37 +13,41 @@ interface FeatureProps {
   description: string;
 }
 
-const Feature: React.FC<FeatureProps> = ({ icon, title, description }) => (
-  <div className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-md">
-    {icon}
-    <h3 className="mt-4 text-xl font-semibold">{title}</h3>
-    <p className="mt-2 text-gray-600">{description}</p>
-  </div>
-)
+const Feature: React.FC<FeatureProps> = ({ icon, title, description }) => {
+  const { theme } = useThemeStore()
+  
+  return (
+    <div className={cn(
+      "flex flex-col items-center text-center p-6 rounded-lg shadow-md",
+      theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white'
+    )}>
+      {icon}
+      <h3 className={cn(
+        "mt-4 text-xl font-semibold",
+        theme === 'dark' && "text-white"
+      )}>{title}</h3>
+      <p className={cn(
+        "mt-2",
+        theme === 'dark' ? "text-gray-300" : "text-gray-600"
+      )}>{description}</p>
+    </div>
+  )
+}
 
 export function Features() {
+  const { theme } = useThemeStore()
+  
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <BarChart2 className="h-8 w-8 text-purple-600" />
-            <span className="text-2xl font-bold text-gray-800">InfluencerPulse</span>
-          </Link>
-          <nav className="hidden md:flex space-x-6">
-            <Link href="/features" className="text-purple-600 font-semibold">Features</Link>
-            <Link href="/pricing" className="text-gray-600 hover:text-purple-600 transition-colors">Pricing</Link>
-            <Link href="/about" className="text-gray-600 hover:text-purple-600 transition-colors">About</Link>
-          </nav>
-          <Button variant="outline">Log In</Button>
-        </div>
-      </header>
-      <main className="container mx-auto px-4 py-20">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-12">
-          Powerful Features for
-          <br />
-          <span className="text-purple-600">Modern Influencers</span>
-        </h1>
+    <div className={cn(
+      "min-h-screen",
+      theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50'
+    )}>
+      <MainNav />
+      <main className="container mx-auto px-4 py-8">
+        <h1 className={cn(
+          "text-3xl font-bold mb-8",
+          theme === 'dark' && "text-white"
+        )}>Platform Features</h1>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <Feature
             icon={<BarChart2 className="h-12 w-12 text-purple-600" />}

@@ -34,5 +34,21 @@ export interface TrendProps {
   category: string;
 }
 
+export interface ThemeProps {
+  theme: 'light' | 'dark';
+  setTheme: (theme: 'light' | 'dark') => void;
+}
+
+export interface BaseComponentProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export interface FeatureProps extends BaseComponentProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
 // Add more interfaces as needed for other components
 

@@ -21,42 +21,62 @@ import {
   ResponsiveContainer,
 } from "recharts"
 import { CaseStudyProps } from '@/types'
+import { useThemeStore } from '@/store/themeStore'
+import { cn } from "@/lib/utils"
 
-const CaseStudyCard: React.FC<CaseStudyProps> = ({ title, platform, influencer, followers, engagement, revenue, duration }) => (
-  <Card className="flex flex-col h-full">
-    <CardHeader>
-      <CardTitle className="text-lg">{title}</CardTitle>
-      <CardDescription>{platform}</CardDescription>
-    </CardHeader>
-    <CardContent className="flex-grow">
-      <div className="grid grid-cols-2 gap-4">
-        <div className="flex items-center">
-          <Users className="h-4 w-4 mr-2 text-blue-500" />
-          <span className="text-sm">{influencer}</span>
+const CaseStudyCard: React.FC<CaseStudyProps> = ({ title, platform, influencer, followers, engagement, revenue, duration }) => {
+  const { theme } = useThemeStore()
+  
+  return (
+    <Card className={cn(
+      "flex flex-col h-full",
+      theme === 'dark' && "bg-gray-800 border-gray-700"
+    )}>
+      <CardHeader>
+        <CardTitle className={cn(
+          "text-lg",
+          theme === 'dark' && "text-white"
+        )}>{title}</CardTitle>
+        <CardDescription className={theme === 'dark' ? "text-gray-400" : "text-gray-500"}>
+          {platform}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <div className="grid grid-cols-2 gap-4">
+          <div className={cn(
+            "flex items-center",
+            theme === 'dark' && "text-gray-300"
+          )}>
+            <Users className="h-4 w-4 mr-2 text-blue-500" />
+            <span className="text-sm">{influencer}</span>
+          </div>
+          <div className="flex items-center">
+            <Eye className="h-4 w-4 mr-2 text-green-500" />
+            <span className="text-sm">{followers} followers</span>
+          </div>
+          <div className="flex items-center">
+            <TrendingUp className="h-4 w-4 mr-2 text-purple-500" />
+            <span className="text-sm">{engagement}% engagement</span>
+          </div>
+          <div className="flex items-center">
+            <BarChart className="h-4 w-4 mr-2 text-yellow-500" />
+            <span className="text-sm">${revenue} revenue</span>
+          </div>
         </div>
-        <div className="flex items-center">
-          <Eye className="h-4 w-4 mr-2 text-green-500" />
-          <span className="text-sm">{followers} followers</span>
+        <div className="mt-4 flex items-center">
+          <PieChart className="h-4 w-4 mr-2 text-indigo-500" />
+          <span className="text-sm">{duration} campaign duration</span>
         </div>
-        <div className="flex items-center">
-          <TrendingUp className="h-4 w-4 mr-2 text-purple-500" />
-          <span className="text-sm">{engagement}% engagement</span>
-        </div>
-        <div className="flex items-center">
-          <BarChart className="h-4 w-4 mr-2 text-yellow-500" />
-          <span className="text-sm">${revenue} revenue</span>
-        </div>
-      </div>
-      <div className="mt-4 flex items-center">
-        <PieChart className="h-4 w-4 mr-2 text-indigo-500" />
-        <span className="text-sm">{duration} campaign duration</span>
-      </div>
-    </CardContent>
-    <CardFooter>
-      <Button className="w-full">Read Case Study</Button>
-    </CardFooter>
-  </Card>
-)
+      </CardContent>
+      <CardFooter>
+        <Button className={cn(
+          "w-full",
+          theme === 'dark' && "bg-gray-700 hover:bg-gray-600"
+        )}>Read Case Study</Button>
+      </CardFooter>
+    </Card>
+  )
+}
 
 const caseStudies: CaseStudyProps[] = [
   {
@@ -131,6 +151,7 @@ const revenueData = [
 ]
 
 export function CaseStudies() {
+  const { theme } = useThemeStore()
   const [activeTab, setActiveTab] = useState<string>("all")
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid")
   const [selectedCategories, setSelectedCategories] = useState<string[]>(["Fashion", "Technology", "Fitness"])
@@ -138,23 +159,31 @@ export function CaseStudies() {
   const filteredCaseStudies = activeTab === "all" ? caseStudies : caseStudies.filter(study => study.category.toLowerCase() === activeTab)
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={cn(
+      "min-h-screen",
+      theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50'
+    )}>
       <MainNav />
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">Case Studies</h1>
+        <h1 className={cn(
+          "text-3xl font-bold mb-8",
+          theme === 'dark' && "text-white"
+        )}>Case Studies</h1>
         <div className="flex justify-between items-center mb-6">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <Input className="pl-10" placeholder="Search case studies..." />
           </div>
           <div className="flex space-x-2">
-            <Button variant="outline" onClick={() => setViewMode(viewMode === "grid" ? "table" : "grid")}>
-              {viewMode === "grid" ? <LayoutList className="h-4 w-4 mr-2" /> : <LayoutGrid className="h-4 w-4 mr-2" />}
-              {viewMode === "grid" ? "See as Table" : "See as Grid"}
-            </Button>
-            <Button variant="outline">
-              <Filter className="h-4 w-4 mr-2" /> Filter
-            </Button>
+            <ActionButton
+              icon={viewMode === "grid" ? <LayoutList className="h-4 w-4" /> : <LayoutGrid className="h-4 w-4" />}
+              label={viewMode === "grid" ? "See as Table" : "See as Grid"}
+              onClick={() => setViewMode(viewMode === "grid" ? "table" : "grid")}
+            />
+            <ActionButton
+              icon={<Filter className="h-4 w-4" />}
+              label="Filter"
+            />
           </div>
         </div>
         <Tabs value={activeTab} onValueChange={setActiveTab}>

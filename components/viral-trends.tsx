@@ -20,6 +20,8 @@ import {
 } from "recharts"
 import { TrendProps } from '@/types'
 import { MainNav } from "@/components/MainNav"
+import { useThemeStore } from '@/store/themeStore'
+import { cn } from "@/lib/utils"
 
 interface TrendCardProps {
   title: string;
@@ -30,37 +32,55 @@ interface TrendCardProps {
   comments: string;
 }
 
-const TrendCard: React.FC<TrendCardProps> = ({ title, platform, views, likes, shares, comments }) => (
-  <Card className="flex flex-col h-full">
-    <CardHeader>
-      <CardTitle className="text-lg">{title}</CardTitle>
-      <CardDescription>{platform}</CardDescription>
-    </CardHeader>
-    <CardContent className="flex-grow">
-      <div className="grid grid-cols-2 gap-4">
-        <div className="flex items-center">
-          <Eye className="h-4 w-4 mr-2 text-blue-500" />
-          <span className="text-sm">{views} views</span>
+const TrendCard: React.FC<TrendCardProps> = ({ title, platform, views, likes, shares, comments }) => {
+  const { theme } = useThemeStore()
+  
+  return (
+    <Card className={cn(
+      "flex flex-col h-full",
+      theme === 'dark' && "bg-gray-800 border-gray-700"
+    )}>
+      <CardHeader>
+        <CardTitle className={cn(
+          "text-lg",
+          theme === 'dark' && "text-white"
+        )}>{title}</CardTitle>
+        <CardDescription className={theme === 'dark' ? "text-gray-400" : "text-gray-500"}>
+          {platform}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <div className={cn(
+          "grid grid-cols-2 gap-4",
+          theme === 'dark' && "text-gray-300"
+        )}>
+          <div className="flex items-center">
+            <Eye className="h-4 w-4 mr-2 text-blue-500" />
+            <span className="text-sm">{views} views</span>
+          </div>
+          <div className="flex items-center">
+            <ThumbsUp className="h-4 w-4 mr-2 text-green-500" />
+            <span className="text-sm">{likes} likes</span>
+          </div>
+          <div className="flex items-center">
+            <Share2 className="h-4 w-4 mr-2 text-purple-500" />
+            <span className="text-sm">{shares} shares</span>
+          </div>
+          <div className="flex items-center">
+            <MessageSquare className="h-4 w-4 mr-2 text-yellow-500" />
+            <span className="text-sm">{comments} comments</span>
+          </div>
         </div>
-        <div className="flex items-center">
-          <ThumbsUp className="h-4 w-4 mr-2 text-green-500" />
-          <span className="text-sm">{likes} likes</span>
-        </div>
-        <div className="flex items-center">
-          <Share2 className="h-4 w-4 mr-2 text-purple-500" />
-          <span className="text-sm">{shares} shares</span>
-        </div>
-        <div className="flex items-center">
-          <MessageSquare className="h-4 w-4 mr-2 text-yellow-500" />
-          <span className="text-sm">{comments} comments</span>
-        </div>
-      </div>
-    </CardContent>
-    <CardFooter>
-      <Button className="w-full">Analyze Trend</Button>
-    </CardFooter>
-  </Card>
-)
+      </CardContent>
+      <CardFooter>
+        <Button className={cn(
+          "w-full",
+          theme === 'dark' && "bg-gray-700 hover:bg-gray-600"
+        )}>Analyze Trend</Button>
+      </CardFooter>
+    </Card>
+  )
+}
 
 const trends: TrendProps[] = [
   {
@@ -138,11 +158,15 @@ export function ViralTrends() {
   const [activeTab, setActiveTab] = useState<string>("all")
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid")
   const [selectedTrends, setSelectedTrends] = useState<string[]>(["#DanceChallenge2023", "Unboxing Mystery Tech", "30-Day Fitness Journey"])
+  const { theme } = useThemeStore()
 
   const filteredTrends = activeTab === "all" ? trends : trends.filter(trend => trend.category.toLowerCase() === activeTab)
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={cn(
+      "min-h-screen",
+      theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50'
+    )}>
       <MainNav />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Viral Trends</h1>
@@ -152,11 +176,22 @@ export function ViralTrends() {
             <Input className="pl-10" placeholder="Search trends..." />
           </div>
           <div className="flex space-x-2">
-            <Button variant="outline" onClick={() => setViewMode(viewMode === "grid" ? "table" : "grid")}>
+            <Button 
+              variant="outline" 
+              onClick={() => setViewMode(viewMode === "grid" ? "table" : "grid")}
+              className={cn(
+                theme === 'dark' && "border-gray-600 text-white hover:bg-gray-700"
+              )}
+            >
               {viewMode === "grid" ? <LayoutList className="h-4 w-4 mr-2" /> : <LayoutGrid className="h-4 w-4 mr-2" />}
               {viewMode === "grid" ? "See as Table" : "See as Grid"}
             </Button>
-            <Button variant="outline">
+            <Button 
+              variant="outline"
+              className={cn(
+                theme === 'dark' && "border-gray-600 text-white hover:bg-gray-700"
+              )}
+            >
               <Filter className="h-4 w-4 mr-2" /> Filter
             </Button>
           </div>

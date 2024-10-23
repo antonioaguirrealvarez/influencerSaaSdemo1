@@ -20,38 +20,52 @@ import {
 } from "recharts"
 import { CompetitorProps } from '@/types'
 import { MainNav } from "@/components/MainNav"
+import { useThemeStore } from '@/store/themeStore'
+import { cn } from "@/lib/utils"
 
-const CompetitorCard: React.FC<CompetitorProps> = ({ name, platform, followers, engagementRate, contentFrequency, topContent }) => (
-  <Card className="flex flex-col h-full">
-    <CardHeader>
-      <CardTitle className="text-lg">{name}</CardTitle>
-      <CardDescription>{platform}</CardDescription>
-    </CardHeader>
-    <CardContent className="flex-grow">
-      <div className="grid grid-cols-2 gap-4">
-        <div className="flex items-center">
-          <Users className="h-4 w-4 mr-2 text-blue-500" />
-          <span className="text-sm">{followers} followers</span>
+const CompetitorCard: React.FC<CompetitorProps> = ({ name, platform, followers, engagementRate, contentFrequency, topContent }) => {
+  const { theme } = useThemeStore()
+  
+  return (
+    <Card className={cn(
+      "flex flex-col h-full",
+      theme === 'dark' && "bg-gray-800 border-gray-700"
+    )}>
+      <CardHeader>
+        <CardTitle className={cn(
+          "text-lg",
+          theme === 'dark' && "text-white"
+        )}>{name}</CardTitle>
+        <CardDescription className={theme === 'dark' ? "text-gray-400" : "text-gray-500"}>
+          {platform}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex items-center">
+            <Users className="h-4 w-4 mr-2 text-blue-500" />
+            <span className="text-sm">{followers} followers</span>
+          </div>
+          <div className="flex items-center">
+            <TrendingUp className="h-4 w-4 mr-2 text-green-500" />
+            <span className="text-sm">{engagementRate}% engagement</span>
+          </div>
+          <div className="flex items-center">
+            <BarChart className="h-4 w-4 mr-2  text-purple-500" />
+            <span className="text-sm">{contentFrequency}</span>
+          </div>
+          <div className="flex items-center">
+            <PieChart className="h-4 w-4 mr-2 text-yellow-500" />
+            <span className="text-sm">{topContent}</span>
+          </div>
         </div>
-        <div className="flex items-center">
-          <TrendingUp className="h-4 w-4 mr-2 text-green-500" />
-          <span className="text-sm">{engagementRate}% engagement</span>
-        </div>
-        <div className="flex items-center">
-          <BarChart className="h-4 w-4 mr-2  text-purple-500" />
-          <span className="text-sm">{contentFrequency}</span>
-        </div>
-        <div className="flex items-center">
-          <PieChart className="h-4 w-4 mr-2 text-yellow-500" />
-          <span className="text-sm">{topContent}</span>
-        </div>
-      </div>
-    </CardContent>
-    <CardFooter>
-      <Button className="w-full">Analyze Competitor</Button>
-    </CardFooter>
-  </Card>
-)
+      </CardContent>
+      <CardFooter>
+        <Button className="w-full">Analyze Competitor</Button>
+      </CardFooter>
+    </Card>
+  )
+}
 
 const competitors: CompetitorProps[] = [
   {
@@ -126,7 +140,10 @@ export function Competitors() {
   const filteredCompetitors = activeTab === "all" ? competitors : competitors.filter(competitor => competitor.platform.toLowerCase() === activeTab)
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={cn(
+      "min-h-screen",
+      theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50'
+    )}>
       <MainNav />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Competitor Analysis</h1>

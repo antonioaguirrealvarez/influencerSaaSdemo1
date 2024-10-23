@@ -8,6 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Search, Filter, DollarSign, Users, Calendar, Clock, Target, Briefcase, LayoutGrid, LayoutList } from "lucide-react"
 import { MainNav } from "@/components/MainNav"
+import { useThemeStore } from "@/store/themeStore"
+import { cn } from "@/lib/utils"
 
 interface CollaborationCardProps {
   title: string;
@@ -21,49 +23,61 @@ interface CollaborationCardProps {
   status: string;
 }
 
-const CollaborationCard: React.FC<CollaborationCardProps> = ({ title, brand, compensation, audience, deadline, duration, goals, requirements, status }) => (
-  <Card className="flex flex-col h-full">
-    <CardHeader>
-      <CardTitle className="text-lg">{title}</CardTitle>
-      <CardDescription>{brand}</CardDescription>
-    </CardHeader>
-    <CardContent className="flex-grow">
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <div className="flex items-center mb-2">
-            <DollarSign className="h-4 w-4 mr-2 text-green-500" />
-            <span className="text-sm">{compensation}</span>
+const CollaborationCard: React.FC<CollaborationCardProps> = ({ title, brand, compensation, audience, deadline, duration, goals, requirements, status }) => {
+  const { theme } = useThemeStore()
+  
+  return (
+    <Card className={cn(
+      "flex flex-col h-full",
+      theme === 'dark' && "bg-gray-800 border-gray-700"
+    )}>
+      <CardHeader>
+        <CardTitle className={cn(
+          "text-lg",
+          theme === 'dark' && "text-white"
+        )}>{title}</CardTitle>
+        <CardDescription className={theme === 'dark' ? "text-gray-400" : "text-gray-500"}>
+          {brand}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <div className="flex items-center mb-2">
+              <DollarSign className="h-4 w-4 mr-2 text-green-500" />
+              <span className="text-sm">{compensation}</span>
+            </div>
+            <div className="flex items-center mb-2">
+              <Users className="h-4 w-4 mr-2 text-blue-500" />
+              <span className="text-sm">{audience}</span>
+            </div>
+            <div className="flex items-center mb-2">
+              <Calendar className="h-4 w-4 mr-2 text-red-500" />
+              <span className="text-sm">{deadline}</span>
+            </div>
           </div>
-          <div className="flex items-center mb-2">
-            <Users className="h-4 w-4 mr-2 text-blue-500" />
-            <span className="text-sm">{audience}</span>
-          </div>
-          <div className="flex items-center mb-2">
-            <Calendar className="h-4 w-4 mr-2 text-red-500" />
-            <span className="text-sm">{deadline}</span>
+          <div>
+            <div className="flex items-center mb-2">
+              <Clock className="h-4 w-4 mr-2 text-purple-500" />
+              <span className="text-sm">{duration}</span>
+            </div>
+            <div className="flex items-center mb-2">
+              <Target className="h-4 w-4 mr-2 text-yellow-500" />
+              <span className="text-sm">{goals}</span>
+            </div>
+            <div className="flex items-center mb-2">
+              <Briefcase className="h-4 w-4 mr-2 text-indigo-500" />
+              <span className="text-sm">{requirements}</span>
+            </div>
           </div>
         </div>
-        <div>
-          <div className="flex items-center mb-2">
-            <Clock className="h-4 w-4 mr-2 text-purple-500" />
-            <span className="text-sm">{duration}</span>
-          </div>
-          <div className="flex items-center mb-2">
-            <Target className="h-4 w-4 mr-2 text-yellow-500" />
-            <span className="text-sm">{goals}</span>
-          </div>
-          <div className="flex items-center mb-2">
-            <Briefcase className="h-4 w-4 mr-2 text-indigo-500" />
-            <span className="text-sm">{requirements}</span>
-          </div>
-        </div>
-      </div>
-    </CardContent>
-    <CardFooter>
-      <Button className="w-full">{status === "Available" ? "Apply Now" : "View Details"}</Button>
-    </CardFooter>
-  </Card>
-)
+      </CardContent>
+      <CardFooter>
+        <Button className="w-full">{status === "Available" ? "Apply Now" : "View Details"}</Button>
+      </CardFooter>
+    </Card>
+  )
+}
 
 const collaborations = [
   {
@@ -160,6 +174,7 @@ export function Opportunities() {
   const [activeMainTab, setActiveMainTab] = useState("opportunities")
   const [activeSubTab, setActiveSubTab] = useState("available")
   const [viewMode, setViewMode] = useState("grid")
+  const { theme } = useThemeStore()
 
   const filteredCollaborations = collaborations.filter(collab => {
     if (activeMainTab === "opportunities") {
@@ -170,7 +185,10 @@ export function Opportunities() {
   })
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={cn(
+      "min-h-screen",
+      theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50'
+    )}>
       <MainNav />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Opportunities & Collaborations</h1>
